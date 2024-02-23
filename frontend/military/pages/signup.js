@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
 import FormSignUp from './components/FormSignUp'
+
+
 export default function page() {
     const [email,setEmail] = useState("")
     const [password,setPassword] = useState("")
@@ -18,6 +20,9 @@ export default function page() {
           console.log(name,rank,email,password)
           
         }
+
+
+
       }
   return (
     <div className='flex flex-col justify-center items-center bg-white min-h-screen'>
