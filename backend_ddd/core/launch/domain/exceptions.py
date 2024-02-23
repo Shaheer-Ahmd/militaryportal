@@ -1,0 +1,2 @@
+class MissileAlreadyFired(Exception):
+    pass
