@@ -52,6 +52,8 @@ def create_user():
 @cross_origin(origin="*")
 def verify_password():
     """verify password endpoint"""
+    print(request.data)
+    # print(request.__dict__)
     req = request.get_json(force=True)
     uow = UnitOfWork()
     try:

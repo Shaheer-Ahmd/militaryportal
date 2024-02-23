@@ -1,60 +1,40 @@
 import axios from "axios";
-import NextAuth, {NextAuthOptions} from "next-auth";
+import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 
-
-
 export const authOptions = {
-    session: {
-      strategy: 'jwt'
-    },
-    providers: [
-        CredentialsProvider({
-          // The name to display on the sign in form (e.g. "Sign in with...")
+  session: {
+    strategy: 'jwt',
+  },
+  providers: [
+    CredentialsProvider({
+      name: 'Credentials',
+      credentials: {
+        email: { label: "Email", type: "email" },
+        password: { label: "Password", type: "text" }
+      },
+      async authorize(credentials, req) {
+        const { email, password } = credentials;
+        
+        try {
+          const response = await axios.post("http://127.0.0.1:5000/verify-password", { email, password });
+          const result = response.data; // accessing response data directly
           
-          type: 'credentials',
-          
-          credentials: {},
+          console.log("Result:", result); // added for debugging
+          console.log("Status:", result.status_code); // added for debugging
+          if (result.status_code == 200) {
+            const user = { email, password }; // corrected property name
+            return user;
+          } else {
+            return null;
+          }
+        } catch (error) {
+          console.error("Error:", error);
+          return null;
+        }
+      }
+    })
+  ]
+};
 
-          async authorize(credentials, req) {
-            
-            const {email, pwd} = credentials;
-            
-            
-            // Add logic here to look up the user from the credentials supplied
-            
-            try {
-                const response = await axios.post("http://127.0.0.1:5000/verify-password", {email: email, password: pwd}); 
-                
-                // fetch("http://localhost:5000/verify-password", {
-                //   method: "POST", // or 'PUT'
-                //   body: JSON.stringify({email: email, password: pwd}),
-                // });
-            
-                const result = await response.json();
-                console.log(result)
-                if (result === "Password Verified"){
-                    const user = { email: email, password: pwd}
-                    return user;
-                }
-                else{
-                    return null;
-                }
-
-            } catch (error) {
-                console.error("Error:", error);
-                return null;
-              }
-          },
-
-         
-
-        })
-      ],
-      pages : {
-        signIn: "/auth/Form"
-      }  
-}
-
-
-export default NextAuth (authOptions)
+export default NextAuth(authOptions);
