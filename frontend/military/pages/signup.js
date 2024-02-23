@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import FormSignUp from './components/FormSignUp'
+import FormSignUp from './auth/FormSignUp'
 
 
 export default function page() {
