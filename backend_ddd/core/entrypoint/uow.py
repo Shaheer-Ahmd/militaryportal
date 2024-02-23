@@ -1,4 +1,5 @@
 from core.authentication.adapters import repository as auth_repo
+from core.launch.adapters import repository as launch_repo
 from abc import ABC, abstractmethod
 import psycopg2
 
@@ -41,6 +42,8 @@ class UnitOfWork(AbstractUnitOfWork):
         )
         self.dict_cursor = self.connection.cursor(cursor_factory=psycopg2.extras.DictCursor)
         self.users = auth_repo.UserRepository(self.connection)
+        self.bases = launch_repo.BaseRepository(self.connection)
+        self.missiles = launch_repo.MissileRepository(self.connection)
 
     def commit(self):
         self.connection.commit()

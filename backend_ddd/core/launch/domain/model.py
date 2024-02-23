@@ -33,7 +33,8 @@ class LaunchValidator:
             self,
             base_location: Location,
             missile: Missile,
-            target_location: Location
+            target_lat: float,
+            target_long: float
     ) -> bool:
-        distance = self._calculate_distance(base_location, target_location)
+        distance = self._calculate_distance(base_location, Location(latitude=target_lat, longitude=target_long))
         return distance <= missile.range
