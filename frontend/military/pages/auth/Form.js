@@ -2,6 +2,8 @@ import Nav from "./Nav";
 import FormSignIn from "./FormSignIn";
 import { signIn } from 'next-auth/react'
 import { useState } from "react";
+import axios from "axios";
+
 export default function Home() {
   const [email,setEmail] = useState("")
   const [password,setPassword] = useState("")
@@ -15,17 +17,16 @@ export default function Home() {
       setError("Both input fields must be set")
     }else{
       setError("")
-      
       const res = await signIn("credentials", {
         email: email,
         password: password,
         callbackUrl: `/`,
         redirect: false,
       });
+      
+      // const response = await axios.post("http://127.0.0.1:5000/verify-password", {"email": email, "password": password}); 
     
-      if (res?.error) {
-        throw new Error("Here");
-      }
+      console.log(res)
 
     }
 

@@ -1,3 +1,4 @@
+import axios from "axios";
 import NextAuth, {NextAuthOptions} from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 
@@ -23,10 +24,12 @@ export const authOptions = {
             // Add logic here to look up the user from the credentials supplied
             
             try {
-                const response = await fetch("http://localhost:5000/verify-password", {
-                  method: "POST", // or 'PUT'
-                  body: JSON.stringify({email: email, password: pwd}),
-                });
+                const response = await axios.post("http://127.0.0.1:5000/verify-password", {email: email, password: pwd}); 
+                
+                // fetch("http://localhost:5000/verify-password", {
+                //   method: "POST", // or 'PUT'
+                //   body: JSON.stringify({email: email, password: pwd}),
+                // });
             
                 const result = await response.json();
                 console.log(result)

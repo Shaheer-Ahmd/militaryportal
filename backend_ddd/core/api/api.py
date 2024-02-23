@@ -7,10 +7,15 @@ from core.authentication.entrypoint import exceptions as auth_svc_ex
 from core.launch.entrypoint import queries as launch_qry
 from core.launch.domain import model as mdl
 from core.launch.domain import exceptions as launch_mdl_ex
+from flask_cors import CORS, cross_origin
+
 app = Flask(__name__)
 app.config["PROPAGATE_EXCEPTIONS"] = True
 
-
+cors = CORS(
+    app,
+    resources={"/*": {"origins": "*"}},
+)
 
 @app.route("/")
 def base():
@@ -20,6 +25,7 @@ def base():
 
 
 @app.route("/create-user", methods=["POST"])
+@cross_origin(origin="*")
 def create_user():
     """create user endpoint"""
     print(request.content_length)
@@ -41,6 +47,8 @@ def create_user():
     return utils.Response(message="User Created", status_code=201).__dict__
 
 @app.route("/verify-password", methods=["POST"])
+
+@cross_origin(origin="*")
 def verify_password():
     """verify password endpoint"""
     req = request.get_json(force=True)
@@ -59,6 +67,7 @@ def verify_password():
     return utils.Response(message="Password Verified", status_code=200).__dict__
 
 @app.route("/get-all-valid-missiles", methods=["POST"])
+@cross_origin(origin="*")
 def get_all_valid_missiles():
     """get all valid missiles endpoint"""
     req = request.get_json(force=True)
@@ -84,6 +93,7 @@ def get_all_valid_missiles():
     ).__dict__
 
 @app.route("/create-base", methods=["POST"])
+@cross_origin(origin="*")
 def create_base():
     """create base endpoint"""
     req = request.get_json(force=True)
@@ -98,6 +108,7 @@ def create_base():
     return utils.Response(message="Base Created", status_code=201).__dict__
 
 @app.route("/create-missile", methods=["POST"])
+@cross_origin(origin="*")
 def create_missile():
     """create missile endpoint"""
     req = request.get_json(force=True)
@@ -113,6 +124,7 @@ def create_missile():
     return utils.Response(message="Missile Created", status_code=201).__dict__
 
 @app.route("/fire-missile", methods=["POST"])
+@cross_origin(origin="*")
 def fire_missile():
     """fire missile endpoint"""
     req = request.get_json(force=True)
