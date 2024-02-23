@@ -22,6 +22,7 @@ def base():
 @app.route("/create-user", methods=["POST"])
 def create_user():
     """create user endpoint"""
+    print(request.__dict__)
     req = request.get_json(force=True)
     uow = UnitOfWork()
     try:
