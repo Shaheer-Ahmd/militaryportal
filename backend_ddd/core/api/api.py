@@ -22,7 +22,7 @@ def base():
 @app.route("/create-user", methods=["POST"])
 def create_user():
     """create user endpoint"""
-    print(request.__dict__)
+    print(request.content_length)
     req = request.get_json(force=True)
     uow = UnitOfWork()
     try:
@@ -40,7 +40,7 @@ def create_user():
     uow.commit_close_connection()
     return utils.Response(message="User Created", status_code=201).__dict__
 
-@app.route("/verify-password", methods=["GET"])
+@app.route("/verify-password", methods=["POST"])
 def verify_password():
     """verify password endpoint"""
     req = request.get_json(force=True)
@@ -58,7 +58,7 @@ def verify_password():
     uow.close_connection()
     return utils.Response(message="Password Verified", status_code=200).__dict__
 
-@app.route("/get-all-valid-missiles", methods=["GET"])
+@app.route("/get-all-valid-missiles", methods=["POST"])
 def get_all_valid_missiles():
     """get all valid missiles endpoint"""
     req = request.get_json(force=True)
