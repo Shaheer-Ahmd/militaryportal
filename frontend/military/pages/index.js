@@ -15,16 +15,18 @@ export default function Home() {
       setError("Both input fields must be set")
     }else{
       setError("")
-    }
-
-    if(error == ""){
       const res = await signIn('credentials', {
         email: email,
         password: password,
         redirect: false
       })
-
+      console.log(res)
     }
+
+   
+      
+
+    
 
   }
   return (

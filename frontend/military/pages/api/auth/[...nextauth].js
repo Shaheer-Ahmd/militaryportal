@@ -18,15 +18,18 @@ export const authOptions = {
             
             const {email, pwd} = credentials;
             
+            
             // Add logic here to look up the user from the credentials supplied
             
             try {
-                const response = await fetch("http://localhost:8000/verify-password", {
-                  method: "GET", // or 'PUT'
+                const response = await fetch("http://localhost:5000/verify-password", {
+                  method: "POST", // or 'PUT'
+                  header: "SignIn",
                   body: JSON.stringify({email: email, password: pwd}),
                 });
             
                 const result = await response.json();
+                console.log(result)
                 if (result === "Password Verified"){
                     const user = { email: email, password: pwd}
                     return user;
