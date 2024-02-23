@@ -37,3 +37,12 @@ def create_missile(
     )
     uow.missiles.add(missile)
     
+
+def fire_missile(
+    missile_id: str,
+    uow: AbstractUnitOfWork
+)->None:
+    """fire missile command"""
+    missile = uow.missiles.get(missile_id)
+    missile.fire()
+    uow.missiles.add(missile)

@@ -1,5 +1,7 @@
 from dataclasses import dataclass
 from enum import Enum
+from core.launch.domain import exceptions as mdl_ex
+
 @dataclass(frozen=True)
 class Location:
     latitude: float
@@ -22,8 +24,11 @@ class Missile:
     base_id: str
     range: float
     blast_radius: float
-    status: MissileStatus
-
+    status: MissileStatus = MissileStatus.UNFIRED
+    def fire(self):
+        if self.status is MissileStatus.FIRED:
+            raise mdl_ex.MissileAlreadyFired("Missile has already been fired")
+        self.status = MissileStatus.FIRED
 
 class LaunchValidator:
 
@@ -41,7 +46,7 @@ class LaunchValidator:
             target_lat: float,
             target_long: float
     ) -> bool:
-        if missile.status == MissileStatus.FIRED:
+        if missile.status is MissileStatus.FIRED:
             return False
         distance = self._calculate_distance(base_location, Location(latitude=target_lat, longitude=target_long))
         return distance <= missile.range

@@ -6,7 +6,7 @@ from core.entrypoint.uow import UnitOfWork
 from core.authentication.entrypoint import exceptions as auth_svc_ex
 from core.launch.entrypoint import queries as launch_qry
 from core.launch.domain import model as mdl
-
+from core.launch.domain import exceptions as launch_mdl_ex
 app = Flask(__name__)
 app.config["PROPAGATE_EXCEPTIONS"] = True
 
@@ -111,3 +111,20 @@ def create_missile():
     )
     uow.commit_close_connection()
     return utils.Response(message="Missile Created", status_code=201).__dict__
+
+@app.route("/fire-missile", methods=["POST"])
+def fire_missile():
+    """fire missile endpoint"""
+    req = request.get_json(force=True)
+    uow = UnitOfWork()
+    try:
+        launch_cmd.fire_missile(
+            missile_id=req["missile_id"],
+            uow=uow
+        )
+    except launch_mdl_ex.MissileAlreadyFired as e:
+        uow.close_connection()
+        return utils.Response(message=str(e), status_code=400).__dict__
+    
+    uow.commit_close_connection()
+    return utils.Response(message="Missile Fired", status_code=200).__dict__
