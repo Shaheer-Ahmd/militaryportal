@@ -17,9 +17,12 @@ function Options({props}){
     
     
     return (
-        <h1>
-            {props.latitude}
-        </h1>  
+        <main className='flex flex-col min-h-screen bg-white items-center justify-center'>
+                <div>
+                    <h1> Latitude: {props.latitude} </h1>
+                    <h1> Longitude: {props.longitude} </h1>
+                </div>
+        </main>
     )
 }
 
