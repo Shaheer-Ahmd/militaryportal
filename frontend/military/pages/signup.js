@@ -9,12 +9,14 @@ export default function page() {
     const handleSubmit = (e) =>{
         e.preventDefault()
         if(!email || !password ||!rank ||!name){
-          setError("Both input fields must be set")
+          setError("All input fields must be set")
         }
         if(email.trim().length == 0 || password.trim().length == 0 || name.trim().length == 0 || rank.trim().length == 0){
-          setError("Both input fields must be set")
+          setError("All input fields must be set")
         }else{
           setError("")
+          console.log(name,rank,email,password)
+          
         }
       }
   return (

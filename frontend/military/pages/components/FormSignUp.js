@@ -18,10 +18,11 @@ export default function FormSignUp({setEmail,setPassword,setName,setRank,email,p
         <h1 className="text-2xl text-primary-tertiary font-sans font-semibold p-2">
         Sign up
         </h1>
+        
+        <div className="flex flex-col items-center gap-3">
         <div className={error ? 'scale-100 text-white bg-primary-first w-4/6 xs:w-2/5 flex justify-center items-center transition-all' : 'scale-0'}>
         {error}
         </div>
-        <div className="flex flex-col items-center gap-3">
             <input 
             placeholder='name'
             className="w-4/6 py-3  focus:outline-none border rounded-sm border-primary-secondary focus:border-2  h-8 px-2 xs:w-2/5 text-gray-600"
@@ -29,7 +30,11 @@ export default function FormSignUp({setEmail,setPassword,setName,setRank,email,p
             onChange={handleNameChange}
             />
             <input
-            
+            placeholder='rank'
+            className="w-4/6 py-3  focus:outline-none border rounded-sm border-primary-secondary focus:border-2  h-8 px-2 xs:w-2/5 text-gray-600"
+            value={rank}
+            onChange={handleRankChange}
+            />
             <input 
             type="email"
             placeholder="Email"
