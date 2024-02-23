@@ -18,7 +18,8 @@ def get_all_missiles_with_base_loc(uow: AbstractUnitOfWork)->List[vm.MissileWith
             name=row['name'],
             base_id=row['base_id'],
             range=row['range'],
-            blast_radius=row['blast_radius']
+            blast_radius=row['blast_radius'],
+            status=mdl.MissileStatus[row['status']]
         ) for row in rows
     ]
 

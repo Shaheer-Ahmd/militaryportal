@@ -19,7 +19,8 @@ class MissileWithBaseLocation:
                 name=row['name'],
                 base_id=row['base_id'],
                 range=row['range'],
-                blast_radius=row['blast_radius']
+                blast_radius=row['blast_radius'],
+                status=row['status']
             ),
             base_name=row['base_name']
         )

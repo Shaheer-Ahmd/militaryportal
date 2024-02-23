@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-
+from enum import Enum
 @dataclass(frozen=True)
 class Location:
     latitude: float
@@ -10,6 +10,10 @@ class Base:
     name: str
     location: Location
 
+@dataclass(frozen=True)
+class MissileStatus(str, Enum):
+    UNFIRED = 1
+    FIRED = 2
 
 @dataclass
 class Missile:
@@ -18,6 +22,7 @@ class Missile:
     base_id: str
     range: float
     blast_radius: float
+    status: MissileStatus
 
 
 class LaunchValidator:
@@ -36,5 +41,7 @@ class LaunchValidator:
             target_lat: float,
             target_long: float
     ) -> bool:
+        if missile.status == MissileStatus.FIRED:
+            return False
         distance = self._calculate_distance(base_location, Location(latitude=target_lat, longitude=target_long))
         return distance <= missile.range

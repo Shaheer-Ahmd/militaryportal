@@ -77,13 +77,14 @@ class MissileRepository(MissileAbstractRepository):
 
     def add(self, missile: mdl.Missile):
         sql = """
-            INSERT INTO missiles (id, base_id, name, range, blast_radius)
-            VALUES (%(id)s, %(base_id)s, %(name)s, %(range)s, %(blast_radius)s)
+            INSERT INTO missiles (id, base_id, name, range, blast_radius, status)
+            VALUES (%(id)s, %(base_id)s, %(name)s, %(range)s, %(blast_radius)s, %(status)s)
             on conflict (id) do update set
             base_id = excluded.base_id,
             name = excluded.name,
             range = excluded.range,
-            blast_radius = excluded.blast_radius
+            blast_radius = excluded.blast_radius,
+            status = excluded.status
         """
 
         self.cursor.execute(
@@ -93,7 +94,8 @@ class MissileRepository(MissileAbstractRepository):
                 'base_id': missile.base_id,
                 'name': missile.name,
                 'range': missile.range,
-                'blast_radius': missile.blast_radius
+                'blast_radius': missile.blast_radius,
+                'status': missile.status.name
             } 
         )
 
@@ -108,5 +110,6 @@ class MissileRepository(MissileAbstractRepository):
             name=missile['name'],
             base_id=missile['base_id'],
             range=missile['range'],
-            blast_radius=missile['blast_radius']
+            blast_radius=missile['blast_radius'],
+            status=mdl.MissileStatus[missile['status']]
         )
