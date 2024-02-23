@@ -3,7 +3,7 @@ from core.api import utils
 from core.authentication.entrypoint import commands as auth_cmd
 from core.entrypoint.uow import UnitOfWork
 from core.authentication.entrypoint import exceptions as auth_svc_ex
-
+from core.launch.entrypoint import queries as launch_qry
 
 app = Flask(__name__)
 app.config["PROPAGATE_EXCEPTIONS"] = True
@@ -54,3 +54,5 @@ def verify_password():
 
     uow.close_connection()
     return utils.Response(message="Password Verified", status_code=200).__dict__
+
+@app.route("/get-all-valid-missiles", methods=["GET"])
