@@ -18,6 +18,7 @@ cors = CORS(
 )
 
 @app.route("/")
+@cross_origin(origin="*")
 def base():
     """base endpoint"""
 
